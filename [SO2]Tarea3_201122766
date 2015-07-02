@@ -1,0 +1,42 @@
+#!/bin/sh
+Archivo=/home/powerpancho/Tarea3_201122766/Archivo.txt
+touch $Archivo
+
+case "$1" in
+start)
+#este pedazo de codigo siver para poder iniciar el dameon
+ 	echo "Se iniciara Daemon de la tarea 3 de sistemas operativos 2."
+	python /home/powerpancho/Tarea3_201122766/Aplicacion.py &
+	PID=$!
+	echo $PID > $Archivo
+	echo
+ ;;
+stop)
+#este pedazo de codigo siver para poder detener el dameon
+	echo "Se esta finalizando el Daemon de la tarea 3 de sistemas operativos 2"
+	PID=$(cat $Archivo)
+	kill $PID
+	echo
+ ;;
+restart)
+#este pedazo de codigo siver para poder reiniciar el dameon
+
+#este pedazo de codigo es como si detuviera el dameon
+	echo "Reiniciando el Dameon de la tarea 3 de sistemas operativos 2 "
+	PID=$(cat $Archivo)
+	kill $PID
+	echo
+	sleep 2
+#este pedazo de codigo es como si iniciara nuevamente el dameon
+	echo "Se ha iniciado nuevamente el Daemon de la tarea 3 de sistemas operativos 2"
+	python /home/powerpancho/Tarea3_201122766/Aplicacion.py &
+	PID=$!
+	echo $PID > $Archivo
+	echo
+ ;;
+*)
+ echo $"Usar: $0 {start|stop|restart}"
+ exit 1
+esac
+ 
+exit 0
